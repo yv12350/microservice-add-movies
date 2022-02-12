@@ -17,7 +17,7 @@ public class MovieController {
     MovieService movieService;
 
     @PostMapping("add-movie")
-    public ResponseEntity<MovieModel> addMovie(@RequestBody AddMovieRequestDto addMovieRequestDto) {
+    public ResponseEntity addMovie(@RequestBody AddMovieRequestDto addMovieRequestDto) {
         try {
             return new ResponseEntity(movieService.addMovie(addMovieRequestDto), HttpStatus.OK);
         } catch (Exception e) {
@@ -26,11 +26,22 @@ public class MovieController {
     }
 
     @GetMapping("list-all-movie")
-    public ResponseEntity<List<MovieModel>> listAllMovies() {
+    public ResponseEntity listAllMovies() {
         try {
             return new ResponseEntity(movieService.listAllMovies(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("get-movie/{Id}")
+    public ResponseEntity getMovieById(@PathVariable("Id") Integer id) throws Exception {
+        if (movieService.getMovieById(id).size() > 0) {
+            return new ResponseEntity(movieService.getMovieById(id), HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity ("No Data Found", HttpStatus.BAD_REQUEST);
+        }
+
     }
 }

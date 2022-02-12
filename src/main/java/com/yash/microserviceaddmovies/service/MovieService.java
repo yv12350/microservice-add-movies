@@ -34,4 +34,12 @@ public class MovieService {
 
         }
     }
+
+    public List<MovieModel> getMovieById(Integer id) throws Exception {
+        try {
+            return movieDao.findByMovieId(id);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }
